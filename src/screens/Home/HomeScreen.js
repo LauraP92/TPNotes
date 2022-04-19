@@ -1,4 +1,4 @@
-import {StyleSheet, View, TextInput} from 'react-native';
+import {StyleSheet, View, TextInput, ScrollView} from 'react-native';
 import React from 'react';
 import {
   BORDER_SMALL,
@@ -8,7 +8,9 @@ import {
 } from '../../constants/LAYOUT';
 import {BLUE} from '../../constants/COLORS';
 import TemplateIcon from '../../components/TemplateIcon';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+// import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import NoteCard from '../../components/NoteCard';
+import {CARDS} from '../../constants/CARDS';
 
 const HomeScreen = ({navigation}) => {
   return (
@@ -26,6 +28,18 @@ const HomeScreen = ({navigation}) => {
           color={BLUE}
         />
       </View>
+      <ScrollView>
+        {CARDS.map(card => {
+          return (
+            <NoteCard
+              title={card.title} // this is a property aka prop !!!!!
+              description={card.description} // this is a property aka prop !!!!!
+              color={card.color}
+              id={card.id} // this is a property aka prop !!!!!
+            />
+          );
+        })}
+      </ScrollView>
       {/* <Pressable onPress={() => navigation.navigate('NoteDetails')}>
         <Text>Press</Text>
       </Pressable> */}

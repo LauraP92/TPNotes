@@ -1,6 +1,6 @@
 import {StyleSheet, Text} from 'react-native';
 import React from 'react';
-import {BORDER_SMALL, SPACE_XLARGE} from '../constants/LAYOUT';
+import {SPACE_XLARGE} from '../constants/LAYOUT';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import TemplateText from './TemplateText';
 

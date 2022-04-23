@@ -4,7 +4,7 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {BLUE} from '../constants/COLORS';
 import {BORDER_MEDIUM, RADIUS_XXLARGE, SPACE_LARGE} from '../constants/LAYOUT';
 
-const ActionButton = () => {
+const AddButton = () => {
   return (
     <View style={styles.container}>
       <Pressable style={styles.circle}>
@@ -14,7 +14,7 @@ const ActionButton = () => {
   );
 };
 
-export default ActionButton;
+export default AddButton;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,13 +1,19 @@
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
 import {SPACE_XLARGE} from '../constants/LAYOUT';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import TemplateText from './TemplateText';
 
-const NoteCard = ({title, description, color}) => {
+const NoteCard = ({title, description, color, id, navigation}) => {
   //  <<-- All props need to be destructured here
   return (
-    <Pressable style={[styles.button, {backgroundColor: color}]}>
+    <Pressable
+      style={[styles.button, {backgroundColor: color}]}
+      onPress={() =>
+        navigation.navigate('NoteDetails', {
+          id: id,
+        })
+      }>
       <TemplateText text={`${title}`} />
       <TemplateText text={`${description}`} />
     </Pressable>

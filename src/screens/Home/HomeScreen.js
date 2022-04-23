@@ -8,10 +8,10 @@ import {
 } from '../../constants/LAYOUT';
 import {BLUE} from '../../constants/COLORS';
 import TemplateIcon from '../../components/TemplateIcon';
-// import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import NoteCard from '../../components/NoteCard';
 import {CARDS} from '../../constants/CARDS';
-import ActionButton from '../../components/ActionButton';
+import AddButton from '../../components/AddButton';
+import DeleteButton from '../../components/DeleteButton';
 
 const HomeScreen = ({navigation}) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,14 +48,15 @@ const HomeScreen = ({navigation}) => {
               title={card.title} // this is a property aka prop !!!!!
               description={card.description} // this is a property aka prop !!!!!
               color={card.color}
+              key={card.id}
+              id={card.id}
+              navigation={navigation}
             />
           );
         })}
       </ScrollView>
-      <ActionButton />
-      {/* <Pressable onPress={() => navigation.navigate('NoteDetails')}>
-        <Text>Press</Text>
-      </Pressable> */}
+      <AddButton />
+      {/* <DeleteButton /> */}
     </View>
   );
 };
@@ -83,8 +84,5 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: SPACE_MEDIUM,
-  },
-  scroll: {
-    // borderWidth: 10,
   },
 });

@@ -10,12 +10,17 @@ const App: () => Node = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      // screenOptions={{
-      //   headerStyle: {backgroundColor: BLUE},
-      //   headerTintColor: WHITE,
-      // }}
-      >
-        <Stack.Screen name="Home" component={HomeScreen} />
+        screenOptions={{
+          headerBackVisible: true,
+          headerBackTitleVisible: false,
+          headerTitle: '',
+          headerShadowVisible: false,
+        }}>
+        <Stack.Screen
+          name="route-name"
+          component={HomeScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen name="NoteDetails" component={NoteDetails} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -11,6 +11,7 @@ import TemplateIcon from '../../components/TemplateIcon';
 import NoteCard from '../../components/NoteCard';
 import {CARDS} from '../../constants/CARDS';
 import AddButton from '../../components/AddButton';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import DeleteButton from '../../components/DeleteButton';
 
 const HomeScreen = ({navigation}) => {
@@ -66,6 +67,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: getStatusBarHeight(),
   },
   searchInput: {
     flexDirection: 'row',

@@ -1,11 +1,12 @@
 import {StyleSheet, TextInput, View, Text} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FONT_XLARGE, SPACE_LARGE} from '../../constants/LAYOUT';
 import {BLUE} from '../../constants/COLORS';
 import {CARDS} from '../../constants/CARDS';
 import IconButton from '../../components/IconButton';
 import {ICONS} from '../../constants/ICONS';
 import DeleteNoteButton from '../../components/DeleteNoteButton';
+import TemplateText from '../../components/TemplateText';
 
 const NoteDetails = ({route, navigation}) => {
   const {id} = route.params;
@@ -26,6 +27,8 @@ const NoteDetails = ({route, navigation}) => {
     });
   }, []);
 
+  const [details, setDetails] = useState('**ADADAA**');
+
   return (
     <View style={[styles.container, {backgroundColor: color}]}>
       <View style={styles.inputContainer}>
@@ -39,7 +42,18 @@ const NoteDetails = ({route, navigation}) => {
           placeholder={'Type your note here'}
           placeholderTextColor={`${BLUE}80`}
           multiline={true}
-        />
+          onChangeText={text => {
+            console.log({text});
+            setDetails(text);
+          }}>
+          <Text>{details}</Text>
+          {/* <Text style={{fontWeight: 'bold'}}>AAAAAAAAAA</Text>
+          <Text>CCCCCCC</Text>
+          <Text style={{textDecorationLine: 'underline'}}>BBBBBBBBBB</Text>
+          <Text style={{fontWeight: 'bold'}}>AAAAAAAAAA</Text>
+          <Text>CCCCCCC</Text>
+          <Text style={{textDecorationLine: 'underline'}}>BBBBBBBBBB</Text> */}
+        </TextInput>
       </View>
       <View style={styles.iconsContainer}>
         {ICONS.map(icon => {

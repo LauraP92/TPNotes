@@ -3,10 +3,10 @@ import React from 'react';
 import {WHITE} from '../constants/COLORS';
 import {FONT_SMALL, SPACE_SMALL} from '../constants/LAYOUT';
 
-const TemplateText = ({text}) => {
+const TemplateText = ({text, style}) => {
   return (
     <View>
-      <Text style={styles.title}>{text}</Text>
+      <Text style={[styles.title, style]}>{text}</Text>
     </View>
   );
 };

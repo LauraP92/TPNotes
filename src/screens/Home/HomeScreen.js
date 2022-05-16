@@ -1,7 +1,8 @@
-import {StyleSheet, View, TextInput, ScrollView} from 'react-native';
+import {StyleSheet, View, TextInput, ScrollView, Text} from 'react-native';
 import React, {useState} from 'react';
 import {
   BORDER_SMALL,
+  FONT_LARGE,
   FONT_XLARGE,
   SPACE_LARGE,
   SPACE_MEDIUM,
@@ -13,6 +14,7 @@ import {CARDS} from '../../constants/CARDS';
 import AddButton from '../../components/AddButton';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import DeleteButton from '../../components/DeleteButton';
+import TemplateText from '../../components/TemplateText';
 
 const HomeScreen = ({navigation}) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,19 +44,30 @@ const HomeScreen = ({navigation}) => {
           color={BLUE}
         />
       </View>
-      <ScrollView style={styles.scroll}>
-        {filteredNotes.map(card => {
-          return (
-            <NoteCard
-              title={card.title} // this is a property aka prop !!!!!
-              description={card.description} // this is a property aka prop !!!!!
-              color={card.color}
-              key={card.id}
-              id={card.id}
-              navigation={navigation}
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContainer}>
+        {filteredNotes.length === 0 ? (
+          <View style={styles.noResultContainer}>
+            <TemplateText
+              style={styles.noResult}
+              text={'Ooops, nothing found with this \n description...'}
             />
-          );
-        })}
+          </View>
+        ) : (
+          filteredNotes.map(card => {
+            return (
+              <NoteCard
+                title={card.title} // this is a property aka prop !!!!!
+                description={card.description} // this is a property aka prop !!!!!
+                color={card.color}
+                key={card.id}
+                id={card.id}
+                navigation={navigation}
+              />
+            );
+          })
+        )}
       </ScrollView>
       <AddButton />
       {/* <DeleteButton /> */}
@@ -78,6 +91,19 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     margin: SPACE_LARGE,
     height: 50,
+  },
+  scrollContainer: {
+    flex: 1,
+  },
+  noResultContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  noResult: {
+    color: BLUE,
+    fontSize: FONT_LARGE,
+    alignSelf: 'center',
+    textAlign: 'center',
   },
   search: {
     fontSize: FONT_XLARGE,

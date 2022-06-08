@@ -4,10 +4,12 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {BLUE} from '../constants/COLORS';
 import {BORDER_MEDIUM, RADIUS_XXLARGE, SPACE_LARGE} from '../constants/LAYOUT';
 
-const AddButton = () => {
+const AddButton = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Pressable style={styles.circle}>
+      <Pressable
+        style={styles.circle}
+        onPress={() => navigation.navigate('NoteDetails')}>
         <Text style={styles.sign}>+</Text>
       </Pressable>
     </View>

@@ -1,5 +1,5 @@
-import {StyleSheet, View, TextInput, ScrollView, Text} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, View, TextInput, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {
   BORDER_SMALL,
   FONT_LARGE,
@@ -14,17 +14,46 @@ import {CARDS} from '../../constants/CARDS';
 import AddButton from '../../components/AddButton';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import DeleteButton from '../../components/DeleteButton';
+import {useIsFocused} from '@react-navigation/native';
 import TemplateText from '../../components/TemplateText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [notes, setNotes] = useState([]);
+  console.log({notes});
 
-  const filteredNotes = CARDS.filter(card => {
+  const filteredNotes = notes.filter(card => {
     return (
       card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      card.description.toLowerCase().includes(searchTerm.toLowerCase())
+      card.details.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
+
+  const isFocused = useIsFocused();
+  console.log({isFocused});
+
+  const getData = async key => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(key);
+      console.log({jsonValue});
+      const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
+      return parsedValue;
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (isFocused === true) {
+        const storedNotes = await getData('notes');
+        if (storedNotes) {
+          setNotes(storedNotes);
+        }
+      }
+    })();
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
@@ -59,7 +88,7 @@ const HomeScreen = ({navigation}) => {
             return (
               <NoteCard
                 title={card.title} // this is a property aka prop !!!!!
-                description={card.description} // this is a property aka prop !!!!!
+                details={card.details} // this is a property aka prop !!!!!
                 color={card.color}
                 key={card.id}
                 id={card.id}
@@ -69,7 +98,7 @@ const HomeScreen = ({navigation}) => {
           })
         )}
       </ScrollView>
-      <AddButton />
+      <AddButton navigation={navigation} />
       {/* <DeleteButton /> */}
     </View>
   );

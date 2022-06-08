@@ -17,7 +17,7 @@ const App: () => Node = () => {
           headerShadowVisible: false,
         }}>
         <Stack.Screen
-          name="route-name"
+          name="Home"
           component={HomeScreen}
           options={{headerShown: false}}
         />

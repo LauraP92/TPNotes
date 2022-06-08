@@ -6,7 +6,7 @@ import {BLUE} from '../constants/COLORS';
 
 const IconButton = ({name, size, onPress, family}) => {
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <TemplateIcon
         style={styles.icon}
         name={name}

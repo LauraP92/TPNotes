@@ -4,7 +4,7 @@ import {SPACE_XLARGE} from '../constants/LAYOUT';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import TemplateText from './TemplateText';
 
-const NoteCard = ({title, description, color, id, navigation}) => {
+const NoteCard = ({title, details, color, id, navigation}) => {
   //  <<-- All props need to be destructured here
   return (
     <Pressable
@@ -14,8 +14,8 @@ const NoteCard = ({title, description, color, id, navigation}) => {
           id: id,
         })
       }>
-      <TemplateText text={`${title}`} />
-      <TemplateText text={`${description}`} />
+      <TemplateText text={`${title}`} style={{color: 'red'}} />
+      <TemplateText text={`${details}`} style={{color: 'red'}} />
     </Pressable>
   );
 };

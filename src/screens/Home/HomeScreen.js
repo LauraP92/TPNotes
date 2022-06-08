@@ -10,7 +10,6 @@ import {
 import {BLUE} from '../../constants/COLORS';
 import TemplateIcon from '../../components/TemplateIcon';
 import NoteCard from '../../components/NoteCard';
-import {CARDS} from '../../constants/CARDS';
 import AddButton from '../../components/AddButton';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import DeleteButton from '../../components/DeleteButton';
@@ -21,8 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeScreen = ({navigation}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [notes, setNotes] = useState([]);
-  console.log({notes});
-
+  const isFocused = useIsFocused();
   const filteredNotes = notes.filter(card => {
     return (
       card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,13 +28,9 @@ const HomeScreen = ({navigation}) => {
     );
   });
 
-  const isFocused = useIsFocused();
-  console.log({isFocused});
-
   const getData = async key => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      console.log({jsonValue});
       const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
       return parsedValue;
     } catch (e) {

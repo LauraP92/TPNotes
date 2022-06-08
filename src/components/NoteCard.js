@@ -14,8 +14,8 @@ const NoteCard = ({title, details, color, id, navigation}) => {
           id: id,
         })
       }>
-      <TemplateText text={`${title}`} style={{color: 'red'}} />
-      <TemplateText text={`${details}`} style={{color: 'red'}} />
+      <TemplateText text={`${title}`} />
+      <TemplateText text={`${details}`} />
     </Pressable>
   );
 };

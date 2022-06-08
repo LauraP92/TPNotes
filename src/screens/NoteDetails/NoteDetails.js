@@ -1,36 +1,40 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {FONT_XLARGE, SPACE_LARGE} from '../../constants/LAYOUT';
-import {BLUE, GREEN} from '../../constants/COLORS';
+import {BLUE, GREEN, PINK, WHITE} from '../../constants/COLORS';
 import IconButton from '../../components/IconButton';
 import DeleteNoteButton from '../../components/DeleteNoteButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CIRCLES} from '../../constants/CIRCLES';
+import CircleButton from '../../components/CircleButton';
+import Square from '../../components/Square';
 
 const NoteDetails = ({route, navigation}) => {
   const id = route?.params?.id;
 
   const [notes, setNotes] = useState([]);
-  console.log({notes});
   const [currentNote, setCurrentNote] = useState({
     id: Date.now(),
     title: '',
     details: '',
-    color: GREEN,
+    color: '',
   });
+  const [showColors, setShowColors] = useState(false);
+  // const [squareColor, setSquareColor] = useState(GREEN);
+  // const [noteColor, setNoteColor] = useState();
 
   useEffect(() => {
     navigation.setOptions({
-      // headerStyle: {
-      //   backgroundColor: color,
-      // },
+      headerStyle: {
+        backgroundColor: currentNote.color,
+      },
       headerRight: () => {
         return <DeleteNoteButton />;
       },
     });
-  }, []);
+  }, [currentNote]);
 
   const storeData = async (key, value) => {
-    console.log({key, value});
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem(key, jsonValue);
@@ -42,7 +46,6 @@ const NoteDetails = ({route, navigation}) => {
   const getData = async key => {
     try {
       const jsonValue = await AsyncStorage.getItem(key);
-      console.log({jsonValue});
       const parsedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
       return parsedValue;
     } catch (e) {
@@ -78,7 +81,17 @@ const NoteDetails = ({route, navigation}) => {
       name: 'format-color-fill',
       family: 'MaterialCommunityIcons',
       size: 40,
-      onPress: () => {},
+      onPress: () => {
+        if (showColors === false) {
+          setShowColors(true);
+        }
+        if (showColors === true) {
+          setShowColors(false);
+        }
+        // showColors === false ? setShowColors(true) : setShowColors(false);
+        // setShowColors(showColors === false ? true : false);
+        // setShowColors(!showColors);
+      },
     },
     {
       name: 'bold',
@@ -102,15 +115,13 @@ const NoteDetails = ({route, navigation}) => {
       name: 'check-square',
       family: 'Feather',
       size: 35,
-      onPress: () => {
-        console.log('Hey!');
-      },
+      onPress: () => {},
     },
   ];
 
   return (
     // <View style={[styles.container, {backgroundColor: color}]}>
-    <View style={[styles.container]}>
+    <View style={[styles.container, {backgroundColor: currentNote.color}]}>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.title}
@@ -123,7 +134,6 @@ const NoteDetails = ({route, navigation}) => {
               details: currentNote.details,
               color: currentNote.color,
             });
-            console.log(text);
           }}
           value={currentNote.title}
         />
@@ -143,6 +153,28 @@ const NoteDetails = ({route, navigation}) => {
           value={currentNote.details}
         />
       </View>
+      {/* <Square color={squareColor} /> */}
+      {showColors === false ? null : (
+        <View style={styles.circleContainer}>
+          {CIRCLES.map(color => {
+            return (
+              <CircleButton
+                color={color}
+                onPress={() => {
+                  // setSquareColor(color);
+                  setCurrentNote({
+                    id: currentNote.id,
+                    title: currentNote.title,
+                    details: currentNote.details,
+                    color: color,
+                  });
+                }}
+                value={currentNote.color}
+              />
+            );
+          })}
+        </View>
+      )}
       <View style={styles.iconsContainer}>
         {ICONS.map(icon => {
           return (
@@ -157,6 +189,7 @@ const NoteDetails = ({route, navigation}) => {
         })}
       </View>
     </View>
+    // </View>
   );
 };
 
@@ -178,6 +211,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: FONT_XLARGE,
     color: BLUE,
+  },
+  circleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
   },
   iconsContainer: {
     flexDirection: 'row',
